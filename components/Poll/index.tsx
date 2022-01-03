@@ -31,7 +31,6 @@ export function Poll({ qandas }: Props) {
   useEffect(() => {
     const randomNumber = Math.floor(Math.random() * questions.length);
     setRandomIndex(randomNumber);
-    console.log(randomNumber);
     setQuestion(questions[randomNumber]);
   }, []);
 
@@ -41,11 +40,11 @@ export function Poll({ qandas }: Props) {
       (answer) => answer.text === textContent
     );
     if (!answer) return;
-    setTotalVotes(totalVotes + 1);
     answer.votes += 1;
+    const maxValue = Math.max(...question.answers.map(({ votes }) => votes));
+    setTotalVotes(totalVotes + 1);
     setIsVoted(true);
     setVotedIndex(question.answers.indexOf(answer));
-    const maxValue = Math.max(...question.answers.map(({ votes }) => votes));
     setHighestVoted(maxValue);
   }
 
